@@ -12,13 +12,17 @@ services:
   templates:
     image: portainer/templates
     container_name: "portainer-templates"
+    ports:
+      - "8080:80"
     networks:
       - local
+    volumes:
+      - ./templates/templates.json:/usr/share/nginx/html/templates.json
 
   portainer:
     image: portainer/portainer
     container_name: "portainer-app"
-    command: --templates http://templates/templates.json
+    command: --templates http://templates/templates.json -d /data
     networks:
       - local
     volumes:
